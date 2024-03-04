@@ -1,0 +1,73 @@
+<!-- public/create-story.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Story</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    #preview-background {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Create Story</h2>
+    <form action="/api/story/create" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="describe">Description:</label>
+        <textarea class="form-control" id="describe" name="describe" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" class="form-control" id="author" name="author" required>
+      </div>
+      <div class="form-group">
+        <label for="timeRelease">Release Time:</label>
+        <input type="number" class="form-control" id="timeRelease" name="timeRelease" required>
+      </div>
+      <div class="form-group">
+  <label for="background">Background Image:</label>
+  <input type="file" class="form-control-file" id="background" name="background" required>
+  <img id="preview-background" src="#" alt="Preview Background" style="display: none;">
+</div>
+<div class="form-group">
+  <label for="images">Images:</label>
+  <input type="file" class="form-control-file" id="images" name="images" multiple required>
+</div>
+
+      <button type="submit" class="btn btn-primary">Create Story</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    document.getElementById('background').addEventListener('change', function(event) {
+      const previewBackground = document.getElementById('preview-background');
+      const fileInput = event.target;
+      
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          previewBackground.src = e.target.result;
+          previewBackground.style.display = 'block';
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+      }
+    });
+  </script>
+</body>
+</html>
